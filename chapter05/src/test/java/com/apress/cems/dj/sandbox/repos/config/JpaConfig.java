@@ -71,7 +71,6 @@ public class JpaConfig {
     @Value("${db.hbm2ddl}")
     private String hbm2ddl;
 
-
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();

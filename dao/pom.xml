@@ -7,10 +7,9 @@
         <groupId>com.example</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
+    <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
     <artifactId>dao</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
