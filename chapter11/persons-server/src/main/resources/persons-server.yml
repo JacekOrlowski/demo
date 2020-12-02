@@ -32,7 +32,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:3000/eureka/
 
-
   instance:
     leaseRenewalIntervalInSeconds: 5
     preferIpAddress: false

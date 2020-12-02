@@ -10,12 +10,13 @@
 		<module>chapter04</module>
 		<module>chapter05</module>
 		<module>chapter06</module>
+		<module>chapter11</module>
 
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.4.RELEASE</version>
+		<version>2.2.4.RELEASE</version>
 		<relativePath/>
 	</parent>
 
@@ -42,6 +43,7 @@
 	</dependencyManagement>
 
 	<dependencies>
+		<!--
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -57,7 +59,7 @@
 					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency>-->
 
 	</dependencies>
 

@@ -22,7 +22,7 @@ spring:
 
 # HTTP Server
 server:
-  port: 4002   # HTTP (Tomcat) port
+  port: 4003   # HTTP (Tomcat) port
   address: 0.0.0.0
 
 # Discovery Server Access
@@ -45,8 +45,8 @@ info:
     version: 1.0-SNAPSHOT
 
 logging:
-  #pattern:
-  #  console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
   level:
     root: INFO
     org.springframework: DEBUG
