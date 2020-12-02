@@ -32,6 +32,8 @@ import com.apress.cems.person.Person;
 import com.apress.cems.util.EmploymentStatus;
 import com.apress.cems.util.Rank;
 
+import javax.persistence.*;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
