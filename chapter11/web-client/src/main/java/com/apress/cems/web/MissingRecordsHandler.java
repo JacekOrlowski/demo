@@ -25,24 +25,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-package com.apress.cems.util;
+package com.apress.cems.web;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import com.apress.cems.ex.NotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iuliana Cosmina
  * @since 1.0
  */
-public class DateProcessor {
-    public static final String DATE_FORMAT= "yyyy-MM-dd HH:mm";
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+@ControllerAdvice
+public class MissingRecordsHandler {
 
-    public static LocalDateTime toDate(final String date) {
-        return LocalDateTime.parse(date, formatter);
-    }
-
-    public static String toString(final LocalDateTime date){
-        return date.format(formatter);
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(value= HttpStatus.NOT_FOUND)
+    public ModelAndView notFound(HttpServletRequest req, NotFoundException nfe) {
+        var mav = new ModelAndView();
+        mav.addObject("problem", nfe.getMessage());
+        mav.setViewName("error");
+        return mav;
     }
 }

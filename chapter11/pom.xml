@@ -8,6 +8,7 @@
         <module>persons-server</module>
         <module>entities</module>
         <module>discovery-server</module>
+        <module>web-client</module>
     </modules>
 
     <parent>

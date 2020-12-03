@@ -22,7 +22,7 @@ spring:
 
 # HTTP Server
 server:
-  port: 4003   # HTTP (Tomcat) port
+  port: 4002   # HTTP (Tomcat) port
   address: 0.0.0.0
 
 # Discovery Server Access
