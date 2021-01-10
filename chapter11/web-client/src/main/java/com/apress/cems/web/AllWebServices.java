@@ -91,7 +91,6 @@ public class AllWebServices {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<CriteriaDto> entity = new HttpEntity<>(criteria, headers);
         ResponseEntity<Person[]> responseEntity = restTemplate.exchange(PERSONS_SERVICE_URL.concat("/persons/search"), HttpMethod.GET, entity, Person[].class);
-
         var persons = responseEntity.getBody();
         assert persons != null;
         var personsList =  Arrays.asList(persons);

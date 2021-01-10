@@ -41,15 +41,14 @@ import java.util.Optional;
  */
 public interface PersonRepo extends JpaRepository<Person, Long> {
 
-    @Query("select p from Person p where p.username like %?1%")
-    Optional<Person> findByUsername(String username);
+    @Query("select p from Person p where p.username=:username")
+    Optional<Person> findByUsername(@Param("username") String username);
 
     @Query("select p from Person p where p.firstName=:fn and p.lastName=:ln")
     Optional<Person> findByCompleteName(@Param("fn") String fn, @Param("ln") String lastName);
 
     @Query("select p from Person p where p.username like %?1%")
     List<Person> findByUsernameLike(String username);
-
 
     @Query("select p from Person p where p.firstName=:fn")
     List<Person> findByFirstName(@Param("fn") String firstName);

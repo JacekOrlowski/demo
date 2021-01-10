@@ -112,7 +112,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Person> getByCriteriaDto(CriteriaDto criteria) throws InvalidCriteriaException {
+    public Person[] getByCriteriaDto(CriteriaDto criteria) throws InvalidCriteriaException {
         List<Person> persons = new ArrayList<>();
         var fg = FieldGroup.getField(criteria.getFieldName());
 
@@ -127,6 +127,7 @@ public class PersonServiceImpl implements PersonService {
                 break;
             case USERNAME:
                 if(criteria.getExactMatch()) {
+                    String value = criteria.getFieldValue();
                     var persOpt = personRepo.findByUsername(criteria.getFieldValue());
                     if(persOpt.isPresent()) {
                         persons.add(persOpt.get());
@@ -145,7 +146,7 @@ public class PersonServiceImpl implements PersonService {
                 persons = personRepo.findByHiringDate(date);
                 break;
         }
-        return persons;
+        return persons.toArray(new Person[0] );
     }
 }
 

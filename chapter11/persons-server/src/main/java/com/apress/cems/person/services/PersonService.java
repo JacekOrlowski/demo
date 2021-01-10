@@ -57,6 +57,6 @@ public interface PersonService {
 
     String getPersonAsHtml(String username);
 
-    List<Person> getByCriteriaDto(CriteriaDto criteria) throws InvalidCriteriaException;
+    Person[] getByCriteriaDto(CriteriaDto criteria) throws InvalidCriteriaException;
 
 }

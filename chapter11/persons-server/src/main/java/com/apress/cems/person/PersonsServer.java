@@ -33,6 +33,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
@@ -43,10 +45,13 @@ import java.io.IOException;
 @EntityScan(basePackages = "com.apress.cems.person")
 @SpringBootApplication
 @EnableEurekaClient
-//@EnableDiscoveryClient
 public class PersonsServer {
-
     private static Logger logger = LoggerFactory.getLogger(PersonsServer.class);
+
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     public static void main(String... args) throws IOException {
         if (args.length == 1) {

@@ -31,19 +31,23 @@ import com.apress.cems.ex.NotFoundException;
 import com.apress.cems.person.services.PersonService;
 import com.apress.cems.util.CriteriaDto;
 import com.apress.cems.util.NumberGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.context.ApplicationContext;
+import org.springframework.http.*;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.util.UriTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriTemplate;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static com.apress.cems.base.AbstractEntity.COMPARATOR_BY_ID;
 
@@ -56,8 +60,49 @@ import static com.apress.cems.base.AbstractEntity.COMPARATOR_BY_ID;
 public class PersonsController {
     private PersonService personService;
 
+    @Autowired
     public PersonsController(PersonService personService) {
         this.personService = personService;
+    }
+    private RestTemplate restTemplate;
+
+    @Autowired
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    private ApplicationContext ctx;
+
+    @Autowired
+    public void setCtx(ApplicationContext ctx){
+        this.ctx = ctx;
+    }
+
+    /**
+     * Prints all beans in the system
+     */
+    @GetMapping("/beans")
+    public String index() {
+        return ctxController.apply(ctx);
+    }
+    Function<ApplicationContext, String> ctxController = ctx -> {
+        StringBuilder sb = new StringBuilder();
+        Arrays.stream(ctx.getBeanDefinitionNames()).sorted().forEach(
+                beanName -> sb.append(beanName).append("\n"));
+        return sb.toString();
+    };
+
+
+    @GetMapping(value = "/criteriaDto", produces = MediaType.APPLICATION_JSON_VALUE)
+    HttpEntity<CriteriaDto> getCriteriaDto(){
+        CriteriaDto criteriaDto = new CriteriaDto();
+        criteriaDto.setFieldName("username");
+        criteriaDto.setFieldValue("scott.tiger");
+        criteriaDto.setExactMatch(false);
+        var headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<CriteriaDto> entity = new HttpEntity<>(criteriaDto, headers);
+        return entity;
     }
 
     /**
@@ -118,10 +163,11 @@ public class PersonsController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/search")
-    public List<Person> processSearch(@Validated @RequestBody CriteriaDto criteria) {
+    @GetMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Person[] processSearch(@Validated @RequestBody CriteriaDto criteria) {
         return personService.getByCriteriaDto(criteria);
     }
+
 
     /**
      * Returns the {@code Person} instance with id {@code id}

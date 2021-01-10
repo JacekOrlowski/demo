@@ -29,6 +29,8 @@ info:
 
 # HTTP Server
 server:
+  error:
+    include-message: always
   port: 4000   # HTTP (Tomcat) port
   address: 0.0.0.0
   servlet:
